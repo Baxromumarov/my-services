@@ -22,11 +22,11 @@ func (s *serviceManager) UserService() pb.UserServiceClient {
 	return s.userService
 }
 
-func NewServiceManager(conf *config.Config) (IServiceManager,error){
+func NewServiceManager(conf *config.Config) (IServiceManager, error) {
 	resolver.SetDefaultScheme("dns")
 
 	connUser, err := grpc.Dial(
-		fmt.Sprintf("%s:%d",conf.UserServiceHost,conf.UserServicePort),
+		fmt.Sprintf("%s:%d", conf.UserServiceHost, conf.UserServicePort),
 		grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return nil, err
@@ -35,6 +35,6 @@ func NewServiceManager(conf *config.Config) (IServiceManager,error){
 	serviceManager := &serviceManager{
 		userService: pb.NewUserServiceClient(connUser),
 	}
-	return serviceManager,nil
-	
+
+	return serviceManager, nil
 }
