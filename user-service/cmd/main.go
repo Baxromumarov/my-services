@@ -2,7 +2,6 @@ package main
 
 import (
 	"net"
-	"fmt"
 	"google.golang.org/grpc/reflection"
 
 	"github.com/baxromumarov/my-services/user-service/config"
