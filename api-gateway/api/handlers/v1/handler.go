@@ -1,10 +1,10 @@
 package v1
 
 import (
-	"github.com/baxromumarov/api-gateway/config"
-	"github.com/baxromumarov/api-gateway/pkg/logger"
-	"github.com/baxromumarov/api-gateway/services"
-	"github.com/baxromumarov/homework/write-template/pkg/logger"
+	"github.com/baxromumarov/my-services/api-gateway/config"
+	"github.com/baxromumarov/my-services/api-gateway/pkg/logger"
+	"github.com/baxromumarov/my-services/api-gateway/services"
+	
 )
 
 type handlerV1 struct{

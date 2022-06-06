@@ -3,8 +3,8 @@ package services
 import (
 	"fmt"
 
-	"github.com/baxromumarov/api-gateway/config"
-	pb "github.com/baxromumarov/api-gateway/genproto"
+	"github.com/baxromumarov/my-services/api-gateway/config"
+	pb "github.com/baxromumarov/my-services/api-gateway/genproto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/resolver"

@@ -1,11 +1,11 @@
 package api
 
 import (
-	v1 "github.com/baxromumarov/api-gateway/api/handlers/v1"
-	"github.com/baxromumarov/api-gateway/config"
-	"github.com/baxromumarov/api-gateway/pkg/logger"
-	"github.com/baxromumarov/api-gateway/services"
-	"github.com/baxromumarov/user-service/pkg/logger"
+	v1 "github.com/baxromumarov/my-services/api-gateway/api/handlers/v1"
+	"github.com/baxromumarov/my-services/api-gateway/config"
+	"github.com/baxromumarov/my-services/api-gateway/pkg/logger"
+	"github.com/baxromumarov/my-services/api-gateway/services"
+	"github.com/baxromumarov/my-services/user-service/pkg/logger"
 	"github.com/gin-gonic/gin"
 )
 
