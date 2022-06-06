@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Jun  6 10:02:56 2022
+# Make data base, printed on Mon Jun  6 14:42:13 2022
 
 # Variables
 
@@ -16,8 +16,6 @@ make: *** No rule to make target 'all'.  Stop.
 GDK_BACKEND = x11
 # environment
 LC_ALL = C
-# environment
-NO_AT_BRIDGE = 1
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
@@ -27,7 +25,7 @@ SNAP_INSTANCE_KEY =
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-8e53e692-6845-4b73-8f50-f57035d820df.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-d42e04ef-f5a5-4290-b2d6-850375529f41.sock
 # environment
 LC_NAME = en_US.UTF-8
 # environment
@@ -71,7 +69,7 @@ VSCODE_CODE_CACHE_PATH = /home/baxrom/.config/Code/CachedData/c3511e6c69bb39013c
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.NUYYM1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.OZR9M1
 # default
 .LOADED := 
 # default
@@ -111,7 +109,7 @@ SNAP_REEXEC =
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 136266
+VSCODE_PID = 2759
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
@@ -119,7 +117,7 @@ XDG_SESSION_TYPE = wayland
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
-SESSION_MANAGER = local/baxrom:@/tmp/.ICE-unix/1709,unix/baxrom:/tmp/.ICE-unix/1709
+SESSION_MANAGER = local/baxrom:@/tmp/.ICE-unix/1744,unix/baxrom:/tmp/.ICE-unix/1744
 # automatic
 *F = $(notdir $*)
 # environment
@@ -155,7 +153,7 @@ MAKE = $(MAKE_COMMAND)
 # environment
 SNAP_COOKIE = Oeh3A3OxPZY380uqOPI14nOZD8DtEfPAd16hs05uY5Mbt83oA_82
 # environment
-PATH = /usr/local/go/bin:/home/baxrom/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+PATH = /home/baxrom/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/usr/local/go/bin:/home/baxrom/go/bin
 # default
 MAKEFILES := 
 # environment
@@ -169,7 +167,7 @@ LC_TIME = en_US.UTF-8
 # environment
 SNAP = /snap/code/97
 # environment
-INVOCATION_ID = b0fafecab5434348b596631750bab2f7
+INVOCATION_ID = 72fa3d43b98d4393bcd723aaec1705b1
 # environment
 SNAP_REVISION = 97
 # environment
@@ -209,7 +207,7 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := build
 # environment
-SYSTEMD_EXEC_PID = 1728
+SYSTEMD_EXEC_PID = 1762
 # environment
 DISPLAY = :0
 # environment
@@ -225,11 +223,11 @@ SNAP_DATA = /var/snap/code/97
 # environment
 SNAP_CONTEXT = Oeh3A3OxPZY380uqOPI14nOZD8DtEfPAd16hs05uY5Mbt83oA_82
 # environment
-MANAGERPID = 1561
+MANAGERPID = 1610
 # environment
 LC_MEASUREMENT = en_US.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 136386
+GIO_LAUNCHED_DESKTOP_FILE_PID = 2715
 # environment
 _ = /snap/code/97/usr/share/code/code
 # environment
@@ -238,9 +236,8 @@ LC_PAPER = en_US.UTF-8
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GDK_PIXBUF_MODULE_FILE = /home/baxrom/snap/code/common/.cache/gdk-pixbuf-loaders.cache
- 
 # environment
-JOURNAL_STREAM = 8:34159
+JOURNAL_STREAM = 8:35488
 # environment
 GOMODCACHE = /home/baxrom/go/pkg/mod
 # environment
@@ -292,7 +289,7 @@ LC_IDENTIFICATION = en_US.UTF-8
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # variable set hash-table stats:
-# Load=139/1024=14%, Rehash=0, Collisions=8/169=5%
+# Load=138/1024=13%, Rehash=0, Collisions=8/168=5%
 
 # Pattern-specific Variable Values
 
@@ -300,9 +297,9 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 
 # Directories
 
-# . (device 40, inode 599636): 12 files, no impossibilities.
+# . (device 40, inode 599636): 11 files, no impossibilities.
 
-# 12 files, no impossibilities in 1 directories.
+# 11 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -350,22 +347,22 @@ build:
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 6):
 	CGO_ENABLED=0 GOOS=darwin go build -mod=vendor -a -installsuffix cgo -o ${CURRENT_DIR}/bin/${APP} ${APP_CMD_DIR}/main.go
- 
 
 # files hash-table stats:
 # Load=7/1024=1%, Rehash=0, Collisions=0/17=0%
 # VPATH Search Paths
 
+ 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 20 / storage = 152 B / avg = 7 B
-# current buf: size = 8162 B / used = 152 B / count = 20 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 19 / storage = 145 B / avg = 7 B
+# current buf: size = 8162 B / used = 145 B / count = 19 / avg = 7 B
 
-# strcache performance: lookups = 27 / hit rate = 25%
+# strcache performance: lookups = 26 / hit rate = 26%
 # hash-table stats:
-# Load=20/8192=0%, Rehash=0, Collisions=0/27=0%
-# Finished Make data base on Mon Jun  6 10:02:56 2022
+# Load=19/8192=0%, Rehash=0, Collisions=0/26=0%
+# Finished Make data base on Mon Jun  6 14:42:13 2022
 
  
