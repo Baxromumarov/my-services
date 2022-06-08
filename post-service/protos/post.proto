@@ -5,13 +5,12 @@ package user;
 service PostService{
     rpc CreatePost(Post) returns(Post);
     rpc GetByIdPost(ByIdPost) returns(Post);
-    rpc GetAllUserPosts(ByIdPost) returns(GetUserPosts);
+    rpc GetAllUserPosts(ByUserIdPost) returns(GetUserPosts);
 }
 
 message GetUserPosts{
     repeated Post posts = 1;
-    string userFirstName = 2;
-    string userLastName = 3;
+    
 }
 
 message ByUserIdPost{

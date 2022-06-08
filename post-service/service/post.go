@@ -61,28 +61,27 @@ func (s *PostService) GetByIdPost(ctx context.Context, id *pb.ByIdPost) (*pb.Pos
 	return post, nil
 }
 
-func (s *PostService) GetAllUserPosts(ctx context.Context, req *pb.ByIdPost) (*pb.GetUserPosts, error) {
-	posts, err := s.storage.Post().GetAllUserPosts(req.Id)
+func (s *PostService) GetAllUserPosts(ctx context.Context, req *pb.ByUserIdPost) (*pb.GetUserPosts, error) {
+	posts, err := s.storage.Post().GetAllUserPosts(req.UserId)
 	if err != nil {
 		s.logger.Error("failed get all user posts", l.Error(err))
 		return nil, status.Error(codes.Internal, "failed get all user posts")
 	}
-	user, err := s.client.UserService().GetById(
-		context.Background(),
-		&pb.ById{
-			Id:posts[0].UserId,
-		},
+	// _, err = s.client.UserService().GetById(
+	// 	context.Background(),
+	// 	&pb.ById{
+	// 		Id:req.UserId,
+	// 	},
 		
-	)
-	if err != nil {
-		s.logger.Error("failed get user by id", l.Error(err))
-		return nil, status.Error(codes.Internal, "failed get user by id")
-	}
+	// )
+	// if err != nil {
+	// 	s.logger.Error("failed get user by id", l.Error(err))
+	// 	return nil, status.Error(codes.Internal, "failed get user by id")
+	// }
 	
 	
 	return &pb.GetUserPosts{
 		Posts: posts,
-		UserFirstName: user.FirstName,
-		UserLastName: user.LastName,
+		
 	}, err
 }

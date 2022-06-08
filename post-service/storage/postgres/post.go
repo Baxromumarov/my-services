@@ -69,7 +69,7 @@ func (r *postRepo) GetAllUserPosts(ID string) ([]*pb.Post, error) {
 		posts []*pb.Post
 	)
 
-	rows, err := r.db.Query("SELECT id, user_id, name, createdat from posts WHERE id = $1", ID)
+	rows, err := r.db.Query("SELECT id, user_id, name, createdat from posts WHERE user_id = $1", ID)
 
 	if err != nil {
 		return nil, err
