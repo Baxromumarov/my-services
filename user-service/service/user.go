@@ -6,6 +6,7 @@ import (
 	"time"
 
 	pb "github.com/baxromumarov/my-services/user-service/genproto"
+	// "github.com/baxromumarov/my-services/user-service/pkg/logger"
 	l "github.com/baxromumarov/my-services/user-service/pkg/logger"
 	cl "github.com/baxromumarov/my-services/user-service/service/grpc_client"
 	"github.com/baxromumarov/my-services/user-service/storage"
@@ -127,9 +128,11 @@ func (s *UserService) GetAll(ctx context.Context, req *pb.Empty) (*pb.UserResp, 
 	for _, user := range users {
 		posts, err := s.client.PostSevice().GetAllUserPosts(
 			ctx, 
-			&pb.ByUserIdPost{UserId: user.Id,
+			&pb.ByUserIdPost{
+				UserId: user.Id,
 				},
-			) 
+			)
+
 	
 	if err != nil {
 		s.logger.Error("Error while getting all users", l.Error(err))
@@ -144,10 +147,27 @@ func (s *UserService) GetAll(ctx context.Context, req *pb.Empty) (*pb.UserResp, 
 
 }
 
-func (s *UserService) GetAllUserPosts(ctx context.Context, req *pb.ByUserIdPost) (*pb.GetUserPosts, error) {
-	address, err := s.client.PostSevice().GetAllUserPosts(ctx, req)
+func (s *UserService) ListUsers(ctx context.Context, req *pb.GetUsersRequest) (*pb.GetUsersResponse, error) {
+	users, count, err := s.storage.User().GetUserList(req.Limit,req.Page)
 	if err != nil {
-		return nil, err
+		s.logger.Error("failed while getting all users",l.Error(err))
+		return nil,  status.Error(codes.Internal,"failed while getting all users")
 	}
-	return address, nil
+	for _, user := range users {
+		post, err := s.client.PostSevice().GetAllUserPosts(
+			ctx, 
+			&pb.ByUserIdPost{UserId: user.Id})
+	
+		if err != nil {
+			s.logger.Error("failed while getting user posts",l.Error(err))
+			return nil,  status.Error(codes.Internal,"failed while getting user posts")
+		}
+		user.Post = post.Posts
+	}
+	return &pb.GetUsersResponse{
+		Users: users,
+		Count: count,
+	},nil
+
+
 }

@@ -14,9 +14,20 @@ service UserService {
   rpc Delete(ById) returns (UserInfo);
   rpc GetById(ById) returns (User);
   rpc GetAll(Empty) returns (UserResp);
-  rpc GetAllUserPosts(ByUserIdPost) returns(GetUserPosts);
+  // rpc GetAllUserPosts(Post) returns(GetUserPosts);
+  rpc ListUsers(GetUsersRequest) returns(GetUsersResponse);
 
 }
+message GetUsersRequest{
+  int64 limit = 1;
+  int64 page = 2;
+}
+
+message GetUsersResponse{
+  repeated User users = 1;
+  int64 count = 2;
+}
+
 message Empty{
 }
 message ById {

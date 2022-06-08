@@ -173,4 +173,41 @@ func (r *userRepo) GetAll() ([]*pb.User, error) {
 	return ruser1, nil
 }
 
+func (r *userRepo) GetUserList(limit, page int64) ([]*pb.User, int64, error){
+	var (
+		users []*pb.User
+		count int64
+	)
+	offset := (page-1)*limit
 
+	query := `SELECT id, first_name, last_name,email,bio,phonenumbers,
+	status,createdat FROM users ORDER BY first_name OFFSET $1 LIMIT $2`
+
+	rows, err := r.db.Query(query, offset, limit)
+	if err != nil{
+		return nil,0,err
+	}
+	for rows.Next(){
+		var user pb.User
+		err := rows.Scan(
+			&user.Id,
+			&user.FirstName,
+			&user.LastName,
+			&user.Email,
+			&user.Bio,
+			pq.Array(&user.PhoneNumbers),
+			&user.Status,
+			&user.CreatedAt,
+		)
+		if err != nil {
+			return nil, 0, err
+		}
+		users = append(users, &user)
+	}
+	countQuery := `SELECT count(*) FROM users`
+	err = r.db.QueryRow(countQuery).Scan(&count)
+	if err != nil {
+		return nil, 0, err
+	}
+	return users, count, nil
+}

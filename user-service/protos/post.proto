@@ -10,6 +10,7 @@ service PostService{
 
 message GetUserPosts{
     repeated Post posts = 1;
+    
 }
 
 message ByUserIdPost{
@@ -26,15 +27,7 @@ message Post{
     repeated Media medias = 4;
     string createdAt = 5;
 }
-message Post1{
-    string id = 1;
-    string user_id = 2;
-    string name = 3;
-    repeated Media medias = 4;
-    string createdAt = 5;
-    string userFirstName = 6;
-    string userLastName = 7;
-}
+
 
 message Media{
     string id = 1;

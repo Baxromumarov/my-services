@@ -14,4 +14,5 @@ type UserStorageI interface {
 	Delete(id *pb.ById) (*pb.UserInfo, error)
 	GetById(*pb.ById) (*pb.User, error)
 	GetAll() ([]*pb.User, error)
+	GetUserList(limit, page int64) ([]*pb.User,int64, error)
 }
