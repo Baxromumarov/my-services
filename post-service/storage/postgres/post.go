@@ -6,6 +6,7 @@ import (
 	pb "github.com/baxromumarov/my-services/post-service/genproto"
 	"github.com/gofrs/uuid"
 	"github.com/jmoiron/sqlx"
+	"time"
 )
 
 type postRepo struct {
@@ -19,12 +20,18 @@ func NewPostRepo(db *sqlx.DB) *postRepo {
 
 func (r *postRepo) CreatePost(post *pb.Post) (*pb.Post, error) {
 	var res = pb.Post{}
-	err := r.db.QueryRow(`INSERT INTO posts(id,user_id,name,createdat)
-	VALUES($1,$2,$3,$4) RETURNING id,name,createdat`,
-		post.Id,post.UserId ,post.Name, post.CreatedAt).Scan(
+	id, err := uuid.NewV4()
+	if err != nil {
+		return nil, err
+	}
+	crtime := time.Now()
+
+	err = r.db.QueryRow(`INSERT INTO posts(id,user_id,name,createdat)
+	VALUES($1,$2,$3,$4) RETURNING id,name`,
+		id, post.UserId, post.Name, crtime).Scan(
 		&res.Id,
 		&res.Name,
-		&res.CreatedAt,
+		//&res.CreatedAt,
 	)
 	if err != nil {
 		return nil, err
@@ -36,6 +43,7 @@ func (r *postRepo) CreatePost(post *pb.Post) (*pb.Post, error) {
 		if err != nil {
 			return nil, err
 		}
+		res.Medias = append(res.Medias, val)
 
 	}
 	if err != nil {
@@ -50,16 +58,33 @@ func (r *postRepo) GetByIdPost(ID string) (*pb.Post, error) {
 		rPost = pb.Post{}
 	)
 
-	err := r.db.QueryRow("SELECT id, user_id, name, createdat from posts WHERE id = $1", ID).Scan(
-		&rPost.Id,
+	err := r.db.QueryRow("SELECT user_id, name, createdat from posts WHERE id = $1", ID).Scan(
 		&rPost.UserId,
 		&rPost.Name,
 		&rPost.CreatedAt,
 	)
-
 	if err != nil {
 		return nil, err
 	}
+	var medias []*pb.Media
+	rows, err := r.db.Query("SELECT id, type, link from medias where post_id = $1", ID)
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		var media pb.Media
+		err := rows.Scan(
+			&media.Id,
+			&media.Type,
+			&media.Link,
+		)
+
+		if err != nil {
+			return nil, err
+		}
+		medias = append(medias, &media)
+	}
+	rPost.Medias = medias
 
 	return &rPost, nil
 }
@@ -107,6 +132,6 @@ func (r *postRepo) GetAllUserPosts(ID string) ([]*pb.Post, error) {
 		}
 		posts = append(posts, &post)
 	}
-	
+
 	return posts, nil
 }

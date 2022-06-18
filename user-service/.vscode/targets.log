@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jun  7 15:42:27 2022
+# Make data base, printed on Fri Jun 17 13:50:45 2022
 
 # Variables
 
@@ -14,8 +16,6 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 GDK_BACKEND = x11
 # environment
 LC_ALL = C
-# environment
-NO_AT_BRIDGE = 1
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
@@ -25,7 +25,7 @@ SNAP_INSTANCE_KEY =
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-cd3f5dde-bc6d-4e8f-b9c7-d00ec647c9a2.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-10a0b222-e917-4980-82e3-9ceffa3c3732.sock
 # environment
 LC_NAME = en_US.UTF-8
 # environment
@@ -47,7 +47,7 @@ GOPATH = /home/baxrom/go
 # environment
 SNAP_INSTANCE_NAME = code
 # environment
-GDK_PIXBUF_MODULEDIR = /snap/code/97/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+GDK_PIXBUF_MODULEDIR = /snap/code/98/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -65,11 +65,11 @@ VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/baxrom/.config/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+VSCODE_CODE_CACHE_PATH = /home/baxrom/.config/Code/CachedData/4af164ea3a06f701fe3e89a2bcbb421d2026b68f
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.GFU3M1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.SEVVN1
 # default
 .LOADED := 
 # default
@@ -109,7 +109,7 @@ SNAP_REEXEC =
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 2797
+VSCODE_PID = 9450
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
@@ -117,7 +117,7 @@ XDG_SESSION_TYPE = wayland
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
-SESSION_MANAGER = local/baxrom:@/tmp/.ICE-unix/1609,unix/baxrom:/tmp/.ICE-unix/1609
+SESSION_MANAGER = local/baxrom:@/tmp/.ICE-unix/1664,unix/baxrom:/tmp/.ICE-unix/1664
 # automatic
 *F = $(notdir $*)
 # environment
@@ -153,7 +153,7 @@ MAKE = $(MAKE_COMMAND)
 # environment
 SNAP_COOKIE = Oeh3A3OxPZY380uqOPI14nOZD8DtEfPAd16hs05uY5Mbt83oA_82
 # environment
-PATH = /usr/local/go/bin:/home/baxrom/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+PATH = /home/baxrom/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/usr/local/go/bin:/home/baxrom/go/bin
 # default
 MAKEFILES := 
 # environment
@@ -165,11 +165,11 @@ SNAP_USER_COMMON = /home/baxrom/snap/code/common
 # environment
 LC_TIME = en_US.UTF-8
 # environment
-SNAP = /snap/code/97
+SNAP = /snap/code/98
 # environment
-INVOCATION_ID = 1323605643394c708a01a00c7bb4a7b5
+INVOCATION_ID = fd81e9a18ad1467494a4ca277bdbedd7
 # environment
-SNAP_REVISION = 97
+SNAP_REVISION = 98
 # environment
 SNAP_REAL_HOME = /home/baxrom
 # environment
@@ -207,7 +207,7 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := build
 # environment
-SYSTEMD_EXEC_PID = 1628
+SYSTEMD_EXEC_PID = 1683
 # environment
 DISPLAY = :0
 # environment
@@ -219,17 +219,17 @@ MAKE_VERSION := 4.3
 # environment
 DISABLE_WAYLAND = 1
 # environment
-SNAP_DATA = /var/snap/code/97
+SNAP_DATA = /var/snap/code/98
 # environment
 SNAP_CONTEXT = Oeh3A3OxPZY380uqOPI14nOZD8DtEfPAd16hs05uY5Mbt83oA_82
 # environment
-MANAGERPID = 1474
+MANAGERPID = 1509
 # environment
 LC_MEASUREMENT = en_US.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 3462
+GIO_LAUNCHED_DESKTOP_FILE_PID = 9395
 # environment
-_ = /snap/code/97/usr/share/code/code
+_ = /snap/code/98/usr/share/code/code
 # environment
 LC_PAPER = en_US.UTF-8
 # environment
@@ -237,7 +237,7 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GDK_PIXBUF_MODULE_FILE = /home/baxrom/snap/code/common/.cache/gdk-pixbuf-loaders.cache
 # environment
-JOURNAL_STREAM = 8:34340
+JOURNAL_STREAM = 8:33120
 # environment
 GOMODCACHE = /home/baxrom/go/pkg/mod
 # environment
@@ -251,11 +251,11 @@ QT_IM_MODULE = ibus
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-c93bfc24-1.67.2-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-c93bfc24-1.68.0-main.sock
 # environment
 SNAP_NAME = code
 # environment
-GSETTINGS_SCHEMA_DIR = /snap/code/97/usr/share/glib-2.0/schemas
+GSETTINGS_SCHEMA_DIR = /snap/code/98/usr/share/glib-2.0/schemas
 # environment
 IM_CONFIG_PHASE = 1
 # environment
@@ -267,7 +267,7 @@ GOPROXY = https://proxy.golang.org,direct
 # automatic
 <F = $(notdir $<)
 # environment
-SNAP_VERSION = c3511e6c
+SNAP_VERSION = 4af164ea
 # default
 SUFFIXES := 
 # environment
@@ -279,7 +279,8 @@ SNAP_COMMON = /var/snap/code/common
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # environment
-SNAP_USER_DATA = /home/baxrom/snap/code/97
+SNAP_USER_DATA = /home/baxrom/snap/code/98
+ 
 # environment
 XDG_MENU_PREFIX = gnome-
 # environment
@@ -289,10 +290,7 @@ LC_IDENTIFICATION = en_US.UTF-8
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # variable set hash-table stats:
- 
-make: *** No rule to make target 'all'.  Stop.
-
-# Load=139/1024=14%, Rehash=0, Collisions=8/169=5%
+# Load=138/1024=13%, Rehash=0, Collisions=8/168=5%
 
 # Pattern-specific Variable Values
 
@@ -300,9 +298,9 @@ make: *** No rule to make target 'all'.  Stop.
 
 # Directories
 
-# . (device 40, inode 625486): 16 files, no impossibilities.
+# . (device 40, inode 625486): 17 files, no impossibilities.
 
-# 16 files, no impossibilities in 1 directories.
+# 17 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -320,7 +318,7 @@ lint:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-07 07:42:22.486170994
+#  Last modified 2022-06-14 09:01:55.620970365
 #  File has been updated.
 #  Successfully updated.
 
@@ -351,20 +349,34 @@ build:
 #  recipe to execute (from 'Makefile', line 6):
 	CGO_ENABLED=0 GOOS=darwin go build -mod=vendor -a -installsuffix cgo -o ${CURRENT_DIR}/bin/${APP} ${APP_CMD_DIR}/main.go
 
+migrate-down:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 17):
+	migrate -path migrations/ -database postgres://postgres:1234@localhost:5432/migrationdb?sslmode=disable down
+
+migrate-up:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 14):
+	migrate -path migrations/ -database postgres://postgres:1234@localhost:5432/migrationdb?sslmode=disable up
+
 # files hash-table stats:
-# Load=7/1024=1%, Rehash=0, Collisions=0/17=0%
+# Load=9/1024=1%, Rehash=0, Collisions=0/19=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 24 / storage = 186 B / avg = 7 B
-# current buf: size = 8162 B / used = 186 B / count = 24 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 27 / storage = 215 B / avg = 7 B
+# current buf: size = 8162 B / used = 215 B / count = 27 / avg = 7 B
 
-# strcache performance: lookups = 31 / hit rate = 22%
+# strcache performance: lookups = 36 / hit rate = 25%
 # hash-table stats:
-# Load=24/8192=0%, Rehash=0, Collisions=0/31=0%
-# Finished Make data base on Tue Jun  7 15:42:27 2022
+# Load=27/8192=0%, Rehash=0, Collisions=0/36=0%
+# Finished Make data base on Fri Jun 17 13:50:45 2022
 
  

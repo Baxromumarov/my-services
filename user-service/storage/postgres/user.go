@@ -1,9 +1,14 @@
 package postgres
 
 import (
+	"fmt"
+	"time"
+
 	pb "github.com/baxromumarov/my-services/user-service/genproto"
+	"github.com/gofrs/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
+	// "database/sql"
 )
 
 type userRepo struct {
@@ -58,13 +63,23 @@ func (r *userRepo) CreateAd(ad *pb.Address) (*pb.Address, error) {
 func (r *userRepo) Insert(user *pb.User) (*pb.User, error) {
 	var res = pb.User{}
 
-	err := r.db.QueryRow(`INSERT INTO users (id, first_name, last_name, email, bio, phoneNumbers, typeId, Status, createdAt, updatedAt, deletedAt)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) Returning id,first_name,last_name`, user.Id, user.FirstName, user.LastName, user.Email,
+	id, err := uuid.NewV4()
+	if err != nil {
+		fmt.Println("Error while generating uuid")
+		return nil, err
+	}
+	crtime := time.Now()
+	err = r.db.QueryRow(`INSERT INTO users (id, first_name, last_name, email, bio, phonenumbers, typeid, status, createdat, updatedat, deletedat)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) Returning id,first_name,last_name,email,
+		bio,phonenumbers`, id, user.FirstName, user.LastName, user.Email,
 		user.Bio, pq.Array(user.PhoneNumbers),
-		user.TypeId, user.Status, user.CreatedAt, user.UpdatedAt, user.DeletedAt).Scan(
+		user.TypeId, user.Status, crtime, user.UpdatedAt, user.DeletedAt).Scan(
 		&res.Id,
 		&res.FirstName,
 		&res.LastName,
+		&res.Email,
+		&res.Bio,
+		pq.Array(&res.PhoneNumbers),
 	)
 	if err != nil {
 		return &pb.User{}, err
@@ -75,9 +90,13 @@ func (r *userRepo) Insert(user *pb.User) (*pb.User, error) {
 //insert into addresses
 func (r *userRepo) InsertAd(ad *pb.Address) (*pb.Address, error) {
 	var add pb.Address
-
-	err := r.db.QueryRow(`INSERT INTO addresses (id, city, country,
-		district,postal_code) VALUES ($1, $2, $3, $4, $5) Returning id,city,country, district,postal_code`, ad.Id, ad.City,
+	idd, err := uuid.NewV4()
+	if err != nil {
+		fmt.Println("Error while generating uuid")
+		return nil, err
+	}
+	err = r.db.QueryRow(`INSERT INTO addresses (id, city, country,
+		district,postal_code) VALUES ($1, $2, $3, $4, $5) Returning id,city,country, district,postal_code`, idd, ad.City,
 		ad.Country, ad.District, ad.PostalCode).Scan(
 		&add.Id,
 		&add.City,
@@ -173,21 +192,21 @@ func (r *userRepo) GetAll() ([]*pb.User, error) {
 	return ruser1, nil
 }
 
-func (r *userRepo) GetUserList(limit, page int64) ([]*pb.User, int64, error){
+func (r *userRepo) GetUserList(limit, page int64) ([]*pb.User, int64, error) {
 	var (
 		users []*pb.User
 		count int64
 	)
-	offset := (page-1)*limit
+	offset := (page - 1) * limit
 
 	query := `SELECT id, first_name, last_name,email,bio,phonenumbers,
 	status,createdat FROM users ORDER BY first_name OFFSET $1 LIMIT $2`
 
 	rows, err := r.db.Query(query, offset, limit)
-	if err != nil{
-		return nil,0,err
+	if err != nil {
+		return nil, 0, err
 	}
-	for rows.Next(){
+	for rows.Next() {
 		var user pb.User
 		err := rows.Scan(
 			&user.Id,

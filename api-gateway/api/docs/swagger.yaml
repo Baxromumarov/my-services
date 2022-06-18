@@ -1,0 +1,146 @@
+definitions:
+  v1.Address:
+    properties:
+      City:
+        type: string
+      Country:
+        type: string
+      District:
+        type: string
+      PostalCode:
+        type: string
+      id:
+        type: string
+    type: object
+  v1.CreateUserRequestBody:
+    properties:
+      Addresses:
+        items:
+          $ref: '#/definitions/v1.Address'
+        type: array
+      Status:
+        type: string
+      bio:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      phoneNumbers:
+        items:
+          type: string
+        type: array
+      post:
+        items:
+          $ref: '#/definitions/v1.Post'
+        type: array
+      typeId:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  v1.Media:
+    properties:
+      id:
+        type: string
+      link:
+        type: string
+      type:
+        type: string
+    type: object
+  v1.Post:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: string
+      medias:
+        items:
+          $ref: '#/definitions/v1.Media'
+        type: array
+      name:
+        type: string
+      user_id:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /v1/users:
+    get:
+      consumes:
+      - application/json
+      description: This api is using for getting users list
+      parameters:
+      - description: limit
+        in: path
+        name: limit
+        required: true
+        type: integer
+      - description: page
+        in: path
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Get user list
+      tags:
+      - user
+  /v1/users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: This api is using for getting user by id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Get user
+      tags:
+      - user
+  /v1/users/post:
+    post:
+      consumes:
+      - application/json
+      description: This api is using for creating new user
+      parameters:
+      - description: user body
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/v1.CreateUserRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create user
+      tags:
+      - user
+swagger: "2.0"
