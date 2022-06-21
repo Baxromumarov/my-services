@@ -47,6 +47,13 @@ definitions:
       updatedAt:
         type: string
     type: object
+  v1.EmailVer:
+    properties:
+      email:
+        type: string
+      email_code:
+        type: string
+    type: object
   v1.Media:
     properties:
       id:
@@ -143,4 +150,48 @@ paths:
       summary: Create user
       tags:
       - user
+  /v1/users/register:
+    post:
+      consumes:
+      - application/json
+      description: This api uses for registration new user
+      parameters:
+      - description: user body
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/v1.CreateUserRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Register User
+      tags:
+      - users
+  /v1/users/verification:
+    post:
+      consumes:
+      - application/json
+      description: This api uses for sendin email code to user
+      parameters:
+      - description: user body
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/v1.EmailVer'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Send Email Code
+      tags:
+      - users
 swagger: "2.0"

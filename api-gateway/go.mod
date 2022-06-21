@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/gin-gonic/gin v1.8.0
+	github.com/goccy/go-json v0.9.7
 	github.com/golang/protobuf v1.5.2
 	github.com/gomodule/redigo v1.8.8
 	github.com/spf13/cast v1.4.1
@@ -13,6 +14,7 @@ require (
 	go.uber.org/zap v1.19.1
 	google.golang.org/grpc v1.43.0
 	google.golang.org/protobuf v1.28.0
+	gopkg.in/mail.v2 v2.3.1
 )
 
 require (
@@ -27,7 +29,6 @@ require (
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.10.0 // indirect
-	github.com/goccy/go-json v0.9.7 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
@@ -45,5 +46,6 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/tools v0.1.7 // indirect
 	google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013 // indirect
+	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )

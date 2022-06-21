@@ -1,11 +1,16 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/baxromumarov/my-services/api-gateway/api"
 	"github.com/baxromumarov/my-services/api-gateway/config"
 	"github.com/baxromumarov/my-services/api-gateway/pkg/logger"
 	"github.com/baxromumarov/my-services/api-gateway/services"
+	rds "github.com/baxromumarov/my-services/api-gateway/storage/redis"
+	"github.com/gomodule/redigo/redis"
 )
+
 // @title           Swagger Example API
 // @version         1.0
 // @description     This is a sample server celler server.
@@ -21,13 +26,29 @@ import (
 // @host      localhost:8080
 // @BasePath  /api/v1
 
-
-
 func main() {
 	cfg := config.Load()
-	log := logger.New(cfg.LogLevel, "api_gateway")
+	log := logger.New(cfg.LogLevel, "My_Api_Gateway")
+
+	pool := redis.Pool{
+
+		MaxIdle:   80,
+
+		MaxActive: 12000,
+		
+		Dial: func() (redis.Conn, error) {
+			c, err := redis.Dial("tcp", fmt.Sprintf("%s:%d", cfg.RedisHost, cfg.RedisPort))
+			if err != nil {
+				panic(err.Error())
+			}
+			return c, err
+		},
+	}
+
+	redisRepo := rds.NewRedisRepo(&pool)
 
 	serviceManager, err := services.NewServiceManager(&cfg)
+
 	if err != nil {
 		log.Error("gRPC dial error", logger.Error(err))
 	}
@@ -36,6 +57,7 @@ func main() {
 		Conf:           cfg,
 		Logger:         log,
 		ServiceManager: serviceManager,
+		RedisRepo: redisRepo,
 	})
 
 	if err := server.Run(cfg.HTTPPort); err != nil {

@@ -13,46 +13,48 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 )
 
-type CreateUserRequestBody struct {
-	Id                   string     `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
-	FirstName            string     `protobuf:"bytes,2,opt,name=first_name,json=firstName,proto3" json:"first_name"`
-	LastName             string     `protobuf:"bytes,3,opt,name=last_name,json=lastName,proto3" json:"last_name"`
-	Email                string     `protobuf:"bytes,4,opt,name=email,proto3" json:"email"`
-	Bio                  string     `protobuf:"bytes,5,opt,name=bio,proto3" json:"bio"`
-	PhoneNumbers         []string   `protobuf:"bytes,6,rep,name=phoneNumbers,proto3" json:"phoneNumbers"`
-	Addresses            []*Address `protobuf:"bytes,7,rep,name=Addresses,proto3" json:"Addresses"`
-	Post                 []*Post    `protobuf:"bytes,8,rep,name=post,proto3" json:"post"`
-	TypeId               int64      `protobuf:"varint,9,opt,name=typeId,proto3" json:"typeId"`
-	Status               string     `protobuf:"bytes,10,opt,name=Status,proto3" json:"Status"`
-	CreatedAt            string     `protobuf:"bytes,11,opt,name=createdAt,proto3" json:"createdAt"`
-	UpdatedAt            string     `protobuf:"bytes,12,opt,name=updatedAt,proto3" json:"updatedAt"`
-	DeletedAt            string     `protobuf:"bytes,13,opt,name=deletedAt,proto3" json:"deletedAt"`
+type EmailVer struct {
+	Email     string `protobuf:"bytes,4,opt,name=email,proto3" json:"email"`
+	EmailCode string `protobuf:"bytes,15,opt,name=email_code,json=emailCode,proto3" json:"email_code"`
+}
 
+type CreateUserRequestBody struct {
+	Id           string     `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	FirstName    string     `protobuf:"bytes,2,opt,name=first_name,json=firstName,proto3" json:"first_name"`
+	LastName     string     `protobuf:"bytes,3,opt,name=last_name,json=lastName,proto3" json:"last_name"`
+	Email        string     `protobuf:"bytes,4,opt,name=email,proto3" json:"email"`
+	Bio          string     `protobuf:"bytes,5,opt,name=bio,proto3" json:"bio"`
+	PhoneNumbers []string   `protobuf:"bytes,6,rep,name=phoneNumbers,proto3" json:"phoneNumbers"`
+	Addresses    []*Address `protobuf:"bytes,7,rep,name=Addresses,proto3" json:"Addresses"`
+	Post         []*Post    `protobuf:"bytes,8,rep,name=post,proto3" json:"post"`
+	TypeId       int64      `protobuf:"varint,9,opt,name=typeId,proto3" json:"typeId"`
+	Status       string     `protobuf:"bytes,10,opt,name=Status,proto3" json:"Status"`
+	CreatedAt    string     `protobuf:"bytes,11,opt,name=createdAt,proto3" json:"createdAt"`
+	UpdatedAt    string     `protobuf:"bytes,12,opt,name=updatedAt,proto3" json:"updatedAt"`
+	DeletedAt    string     `protobuf:"bytes,13,opt,name=deletedAt,proto3" json:"deletedAt"`
+	UserName     string    `protobuf:"bytes,13,opt,name=user_name,json=userName,proto3" json:"user_name"`
 }
 
 type Address struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
-	City                 string   `protobuf:"bytes,2,opt,name=City,proto3" json:"City"`
-	Country              string   `protobuf:"bytes,3,opt,name=Country,proto3" json:"Country"`
-	District             string   `protobuf:"bytes,4,opt,name=District,proto3" json:"District"`
-	PostalCode           string   `protobuf:"bytes,5,opt,name=PostalCode,proto3" json:"PostalCode"`
-
+	Id         string `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	City       string `protobuf:"bytes,2,opt,name=City,proto3" json:"City"`
+	Country    string `protobuf:"bytes,3,opt,name=Country,proto3" json:"Country"`
+	District   string `protobuf:"bytes,4,opt,name=District,proto3" json:"District"`
+	PostalCode string `protobuf:"bytes,5,opt,name=PostalCode,proto3" json:"PostalCode"`
 }
 
 type Post struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
-	UserId               string   `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id"`
-	Name                 string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
-	Medias               []*Media `protobuf:"bytes,4,rep,name=medias,proto3" json:"medias"`
-	CreatedAt            string   `protobuf:"bytes,5,opt,name=createdAt,proto3" json:"createdAt"`
-
+	Id        string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	UserId    string   `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id"`
+	Name      string   `protobuf:"bytes,3,opt,name=name,proto3" json:"name"`
+	Medias    []*Media `protobuf:"bytes,4,rep,name=medias,proto3" json:"medias"`
+	CreatedAt string   `protobuf:"bytes,5,opt,name=createdAt,proto3" json:"createdAt"`
 }
 
 type Media struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
-	Type                 string   `protobuf:"bytes,2,opt,name=type,proto3" json:"type"`
-	Link                 string   `protobuf:"bytes,3,opt,name=link,proto3" json:"link"`
-	
+	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
+	Type string `protobuf:"bytes,2,opt,name=type,proto3" json:"type"`
+	Link string `protobuf:"bytes,3,opt,name=link,proto3" json:"link"`
 }
 
 // CreateUser creates user
@@ -97,7 +99,7 @@ func (h *handlerV1) CreateUser(c *gin.Context) {
 
 // GetUser gets user by id
 // @Summary Get user
-// @Description This api is using for getting user by id  
+// @Description This api is using for getting user by id
 // @Tags user
 // @Accept  json
 // @Produce  json
@@ -131,7 +133,7 @@ func (h *handlerV1) GetUser(c *gin.Context) {
 // @Summary Get user list
 // @Description This api is using for getting users list
 // @Tags user
-	// api.DELETE("/users/:id", handlerV1.DeleteUser)
+// api.DELETE("/users/:id", handlerV1.DeleteUser)
 // @Accept  json
 // @Produce  json
 // @Param limit path int true "limit"
@@ -173,8 +175,8 @@ func (h *handlerV1) ListUsers(c *gin.Context) {
 }
 
 // // UpdateUser updates user by id
-// @Summary Update user 
-// @Description This api is using for updatting user by id  
+// @Summary Update user
+// @Description This api is using for updatting user by id
 // @Tags user
 // @Accept  json
 // @Produce  json
@@ -237,4 +239,3 @@ func (h *handlerV1) ListUsers(c *gin.Context) {
 
 // 	c.JSON(http.StatusOK, response)
 // }
-

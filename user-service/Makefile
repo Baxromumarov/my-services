@@ -11,7 +11,7 @@ proto-gen:
 lint: ## Run golangci-lint with printing to stdout
 	golangci-lint -c .golangci.yaml run --build-tags "musl" ./...
 migrate-up:
-	migrate -path migrations/ -database postgres://postgres:1234@localhost:5432/migrationdb?sslmode=disable up
+	migrate -path migrations/ -database postgres://postgres:1234@localhost:5432/tesdb?sslmode=disable up
 
 migrate-down:
-	migrate -path migrations/ -database postgres://postgres:1234@localhost:5432/migrationdb?sslmode=disable down
+	migrate -path migrations/ -database postgres://postgres:1234@localhost:5432/tesdb?sslmode=disable down

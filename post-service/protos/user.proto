@@ -10,13 +10,37 @@ service UserService {
   rpc CreateAd(Address) returns (Address);
   rpc Insert(User) returns (User);
   rpc InsertAd(Address) returns (Address);
-//  rpc Update(User) returns (UserInfo);
+  //  rpc Update(User) returns (UserInfo);
   rpc Delete(ById) returns (UserInfo);
   rpc GetById(ById) returns (User);
   rpc GetAll(Empty) returns (UserResp);
   // rpc GetAllUserPosts(Post) returns(GetUserPosts);
   rpc ListUsers(GetUsersRequest) returns(GetUsersResponse);
 
+  rpc UserList(UserListRequest) returns (UserListResponse);
+  rpc CheckField(UserCheckRequest) returns (UserCheckResponse);
+}
+//-------------------------CheckField----------------------------
+
+message UserCheckRequest {
+  string field = 1;
+  string value = 2;
+}
+
+message UserCheckResponse {
+  bool response = 1;
+}
+
+
+//----------------------UserList----------------------------------
+message UserListRequest {
+  int64 limit = 1;
+  int64 page = 2;
+}
+// ---------------------------------------------------------
+message UserListResponse {
+  repeated User user = 1;
+  int64 count = 2;
 }
 message GetUsersRequest{
   int64 limit = 1;
@@ -36,7 +60,7 @@ message ById {
 }
 
 message UserResp{
- repeated User user = 1;
+  repeated User user = 1;
 
 
 }
@@ -45,7 +69,8 @@ message UserInfo {
   string id = 1;
   string first_name = 2;
   string last_name = 3;
-  
+  string email = 4;
+
 }
 
 
@@ -56,7 +81,7 @@ message Address {
   string Country = 3;
   string District = 4;
   string PostalCode = 5;
-  
+
 }
 
 message User {
@@ -73,5 +98,9 @@ message User {
   string createdAt = 11;
   string updatedAt = 12;
   string deletedAt = 13;
+  string user_name =14;
+  string password = 15;
+  string email_code = 16;
+
 
 }

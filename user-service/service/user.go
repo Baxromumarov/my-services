@@ -70,13 +70,8 @@ func (s *UserService) Insert(ctx context.Context, req1 *pb.User) (*pb.User, erro
 	return user, nil
 
 }
+
 func (s *UserService) InsertAd(ctx context.Context, add *pb.Address) (*pb.Address, error) {
-	// idd, err := uuid.NewV4()
-	// if err != nil {
-	// 	s.logger.Error("Error while inserting address", l.Error(err))
-	// 	return nil, status.Error(codes.Internal, "Error while inserting address")
-	// }
-	// add.Id = idd.String()
 	address, err := s.storage.User().InsertAd(add)
 	if err != nil {
 		s.logger.Error("Error while inserting address", l.Error(err))
@@ -153,4 +148,45 @@ func (s *UserService) ListUsers(ctx context.Context, req *pb.GetUsersRequest) (*
 		Count: count,
 	}, nil
 
+}
+
+func (s *UserService) UserList(ctx context.Context, req *pb.UserListRequest) (*pb.UserListResponse, error) {
+	users, count, err := s.storage.User().UserList(req.Limit, req.Page)
+
+	if err != nil {
+		s.logger.Error("failed while getting list of users", l.Error(err))
+		return nil, status.Error(codes.Internal, "failed while getting list of users")
+	}
+
+	for _, user := range users {
+		posts, err := s.client.PostSevice().GetAllUserPosts(
+			ctx,
+			&pb.ByUserIdPost{
+				UserId: user.Id,
+			})
+
+		if err != nil {
+			s.logger.Error("failed while getting list of user postd", l.Error(err))
+			return nil, status.Error(codes.Internal, "failed while getting list of user posts")
+		}
+
+		user.Post = posts.Posts
+	}
+
+	return &pb.UserListResponse{
+		User:  users,
+		Count: count,
+	}, nil
+}
+
+func (s *UserService) CheckField(ctx context.Context, req *pb.UserCheckRequest) (*pb.UserCheckResponse, error) {
+
+	bl, err := s.storage.User().CheckFeild(req.Field, req.Value)
+
+	if err != nil {
+		s.logger.Error("CheckFeild FUNC ERROR", l.Error(err))
+		return nil, status.Error(codes.Internal, "CheckFeild FUNC ERROR")
+	}
+
+	return &pb.UserCheckResponse{Response: bl}, nil
 }

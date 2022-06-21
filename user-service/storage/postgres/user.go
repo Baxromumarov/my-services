@@ -1,6 +1,7 @@
 package postgres
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -69,17 +70,16 @@ func (r *userRepo) Insert(user *pb.User) (*pb.User, error) {
 		return nil, err
 	}
 	crtime := time.Now()
-	err = r.db.QueryRow(`INSERT INTO users (id, first_name, last_name, email, bio, phonenumbers, typeid, status, createdat, updatedat, deletedat)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) Returning id,first_name,last_name,email,
-		bio,phonenumbers`, id, user.FirstName, user.LastName, user.Email,
+	err = r.db.QueryRow(`INSERT INTO users (id, first_name, last_name, email, bio, phone_numbers, typeid, status, createdat,user_name,password, email_code)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,$12) Returning id,first_name,last_name,email,
+		bio`, id, user.FirstName, user.LastName, user.Email,
 		user.Bio, pq.Array(user.PhoneNumbers),
-		user.TypeId, user.Status, crtime, user.UpdatedAt, user.DeletedAt).Scan(
+		user.TypeId, user.Status, crtime, user.UserName,user.Password,user.EmailCode).Scan(
 		&res.Id,
 		&res.FirstName,
 		&res.LastName,
 		&res.Email,
 		&res.Bio,
-		pq.Array(&res.PhoneNumbers),
 	)
 	if err != nil {
 		return &pb.User{}, err
@@ -229,4 +229,93 @@ func (r *userRepo) GetUserList(limit, page int64) ([]*pb.User, int64, error) {
 		return nil, 0, err
 	}
 	return users, count, nil
+}
+
+func (r *userRepo) UserList(limit, page int64) ([]*pb.User, int64, error) {
+
+	var users []*pb.User
+
+	offset := (page - 1) * limit
+
+	listQuery := `SELECT id, first_name, last_name, bio, email, status, created_at, phone_number FROM users LIMIT $1 OFFSET $2`
+	rows, err := r.db.Query(listQuery, limit, offset)
+
+	if err != nil {
+		return nil, 0, err
+	}
+
+	for rows.Next() {
+		var user pb.User
+		err = rows.Scan(
+			&user.Id,
+			&user.FirstName,
+			&user.LastName,
+			&user.Bio,
+			&user.Email,
+			&user.Status,
+			&user.CreatedAt,
+			pq.Array(&user.PhoneNumbers),
+		)
+
+		if err != nil {
+			return nil, 0, err
+		}
+
+		var address pb.Address
+
+		addressQuery := `SELECT city, country, district, postal_code FROM adress WHERE user_id = $1`
+
+		rows1, err := r.db.Query(addressQuery, user.Id)
+
+		if err != nil {
+			return nil, 0, err
+		}
+
+		for rows1.Next() {
+			err := rows1.Scan(
+				&address.City,
+				&address.Country,
+				&address.District,
+				&address.PostalCode,
+			)
+
+			if err != nil {
+				return nil, 0, err
+			}
+		}
+		user.Addresses = append(user.Addresses, &address)
+		users = append(users, &user)
+	}
+
+	var count int64
+	err = r.db.QueryRow("SELECT COUNT(*) FROM users").Scan(&count)
+
+	if err != nil {
+		return nil, 0, err
+	}
+	return users, count, nil
+}
+
+func (r *userRepo) CheckFeild(field, value string) (bool, error) {
+	var cle int
+	if field == "username" {
+		err := r.db.QueryRow("SELECT COUNT(1) FROM users WHERE user_name = $1 AND deletedat = NULL", value).Scan(&cle)
+		if err != nil {
+			return false, err
+		}
+	} else if field == "email" {
+		err := r.db.QueryRow("SELECT COUNT(1) FROM users WHERE user_name = $1 AND deletedat = NULL", value).Scan(&cle)
+		if err != nil {
+			return false, err
+		}
+	} else {
+		err := errors.New("ERROR IN CheckField")
+		return false, err
+	}
+
+	if cle == 0 {
+		return false, nil
+	}
+
+	return true, nil
 }
