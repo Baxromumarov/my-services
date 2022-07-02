@@ -18,4 +18,5 @@ type UserStorageI interface {
 
 	UserList(limit, page int64) ([]*pb.User, int64, error)
 	CheckFeild(field, value string) (bool, error)
+	GetByEmail(email *pb.Email) (*pb.UserData, error)
 }

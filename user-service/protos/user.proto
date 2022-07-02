@@ -19,7 +19,20 @@ service UserService {
 
   rpc UserList(UserListRequest) returns (UserListResponse);
   rpc CheckField(UserCheckRequest) returns (UserCheckResponse);
+  rpc GetByEmail(Email) returns (UserData);
 }
+
+message Email{
+  string email = 1;
+}
+
+message UserData{
+  string id = 1;
+  string email_code = 2;
+  string password = 3;
+}
+
+
 //-------------------------CheckField----------------------------
 
 message UserCheckRequest {

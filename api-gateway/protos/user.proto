@@ -10,7 +10,7 @@ service UserService {
   rpc CreateAd(Address) returns (Address);
   rpc Insert(User) returns (User);
   rpc InsertAd(Address) returns (Address);
-  //  rpc Update(User) returns (UserInfo);
+//  rpc Update(User) returns (UserInfo);
   rpc Delete(ById) returns (UserInfo);
   rpc GetById(ById) returns (User);
   rpc GetAll(Empty) returns (UserResp);
@@ -19,7 +19,20 @@ service UserService {
 
   rpc UserList(UserListRequest) returns (UserListResponse);
   rpc CheckField(UserCheckRequest) returns (UserCheckResponse);
+  rpc GetByEmail(Email) returns (UserData);
 }
+
+message Email{
+  string email = 1;
+}
+
+message UserData{
+  string id = 1;
+  string email_code = 2;
+  string password = 3;
+}
+
+
 //-------------------------CheckField----------------------------
 
 message UserCheckRequest {
@@ -60,7 +73,7 @@ message ById {
 }
 
 message UserResp{
-  repeated User user = 1;
+ repeated User user = 1;
 
 
 }
@@ -70,7 +83,7 @@ message UserInfo {
   string first_name = 2;
   string last_name = 3;
   string email = 4;
-
+  
 }
 
 
@@ -81,7 +94,7 @@ message Address {
   string Country = 3;
   string District = 4;
   string PostalCode = 5;
-
+  
 }
 
 message User {
@@ -101,5 +114,6 @@ message User {
   string user_name =14;
   string password = 15;
   string email_code = 16;
+
 
 }

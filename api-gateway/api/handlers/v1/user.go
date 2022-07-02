@@ -12,6 +12,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"google.golang.org/protobuf/encoding/protojson"
 )
+type ForLogin struct {
+	Email string
+	Password string
+}
 
 type EmailVer struct {
 	Email     string `protobuf:"bytes,4,opt,name=email,proto3" json:"email"`
@@ -33,6 +37,7 @@ type CreateUserRequestBody struct {
 	UpdatedAt    string     `protobuf:"bytes,12,opt,name=updatedAt,proto3" json:"updatedAt"`
 	DeletedAt    string     `protobuf:"bytes,13,opt,name=deletedAt,proto3" json:"deletedAt"`
 	UserName     string    `protobuf:"bytes,13,opt,name=user_name,json=userName,proto3" json:"user_name"`
+	Password string
 }
 
 type Address struct {
@@ -56,6 +61,38 @@ type Media struct {
 	Type string `protobuf:"bytes,2,opt,name=type,proto3" json:"type"`
 	Link string `protobuf:"bytes,3,opt,name=link,proto3" json:"link"`
 }
+
+//@Summary Get User By ID From Token
+//@Description This api for Get User By Token ID
+//@Tags users
+//@Accept json
+//@Produce json
+//@Security BearerAuth
+//@Success 200 {string} success
+//@Router /v1/users/idtoken [get]
+func (h *handlerV1) GetUserByIdFromToken(c *gin.Context) {
+	var jspbMarshal protojson.MarshalOptions
+	jspbMarshal.UseProtoNames = true
+
+	claims := CheckClaims(h, c)
+	UserId := claims["sub"].(string)
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second * time.Duration(h.cfg.CtxTimeout))
+	defer cancel()
+
+	users, err := h.serviceManager.UserService().GetById(ctx, &pb.ById{Id: UserId})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError,gin.H{
+			"error":err.Error(),
+		})
+		h.log.Error("error while getting user by id", l.Error(err))
+		return
+	}
+	c.JSON(http.StatusOK, users)
+}
+
+
+
 
 // CreateUser creates user
 // @Summary Create user
@@ -143,6 +180,7 @@ func (h *handlerV1) GetUser(c *gin.Context) {
 func (h *handlerV1) ListUsers(c *gin.Context) {
 	queryParams := c.Request.URL.Query()
 
+	CheckClaims(h,c)
 	params, errStr := utils.ParseQueryParams(queryParams)
 	if errStr != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -217,25 +255,25 @@ func (h *handlerV1) ListUsers(c *gin.Context) {
 
 // // DeleteUser deletes user by id
 // // route /v1/users/{id} [delete]
-// func (h *handlerV1) DeleteUser(c *gin.Context) {
-// 	var jspbMarshal protojson.MarshalOptions
-// 	jspbMarshal.UseProtoNames = true
+func (h *handlerV1) DeleteUser(c *gin.Context) {
+	var jspbMarshal protojson.MarshalOptions
+	jspbMarshal.UseProtoNames = true
 
-// 	guid := c.Param("id")
-// 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
-// 	defer cancel()
+	guid := c.Param("id")
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
+	defer cancel()
 
-// 	response, err := h.serviceManager.UserService().Delete(
-// 		ctx, &pb.ByIdReq{
-// 			Id: guid,
-// 		})
-// 	if err != nil {
-// 		c.JSON(http.StatusInternalServerError, gin.H{
-// 			"error": err.Error(),
-// 		})
-// 		h.log.Error("failed to delete user", l.Error(err))
-// 		return
-// 	}
+	response, err := h.serviceManager.UserService().Delete(
+		ctx, &pb.ById{
+			Id: guid,
+		})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to delete user", l.Error(err))
+		return
+	}
 
-// 	c.JSON(http.StatusOK, response)
-// }
+	c.JSON(http.StatusOK, response)
+}

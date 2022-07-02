@@ -16,6 +16,45 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/users/login": {
+            "get": {
+                "description": "login user with password",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "login user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "email",
+                        "name": "email",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "password",
+                        "name": "password",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/users": {
             "get": {
                 "description": "This api is using for getting users list",
@@ -45,6 +84,34 @@ const docTemplate = `{
                         "required": true
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/users/idtoken": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "This api for Get User By Token ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get User By ID From Token",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -91,6 +158,11 @@ const docTemplate = `{
         },
         "/v1/users/register": {
             "post": {
+                "security": [
+                    {
+                        "APiKeyAuth": []
+                    }
+                ],
                 "description": "This api uses for registration new user",
                 "consumes": [
                     "application/json"
@@ -125,6 +197,11 @@ const docTemplate = `{
         },
         "/v1/users/verification": {
             "post": {
+                "security": [
+                    {
+                        "APiKeyAuth": []
+                    }
+                ],
                 "description": "This api uses for sendin email code to user",
                 "consumes": [
                     "application/json"
@@ -244,6 +321,9 @@ const docTemplate = `{
                 "last_name": {
                     "type": "string"
                 },
+                "password": {
+                    "type": "string"
+                },
                 "phoneNumbers": {
                     "type": "array",
                     "items": {
@@ -260,6 +340,9 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "updatedAt": {
+                    "type": "string"
+                },
+                "user_name": {
                     "type": "string"
                 }
             }
@@ -311,6 +394,14 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "description": "GetMyProfile",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }`

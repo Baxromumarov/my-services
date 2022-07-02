@@ -34,6 +34,8 @@ definitions:
         type: string
       last_name:
         type: string
+      password:
+        type: string
       phoneNumbers:
         items:
           type: string
@@ -45,6 +47,8 @@ definitions:
       typeId:
         type: integer
       updatedAt:
+        type: string
+      user_name:
         type: string
     type: object
   v1.EmailVer:
@@ -81,6 +85,32 @@ definitions:
 info:
   contact: {}
 paths:
+  /users/login:
+    get:
+      consumes:
+      - application/json
+      description: login user with password
+      parameters:
+      - description: email
+        in: path
+        name: email
+        required: true
+        type: string
+      - description: password
+        in: path
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: login user
+      tags:
+      - users
   /v1/users:
     get:
       consumes:
@@ -128,6 +158,23 @@ paths:
       summary: Get user
       tags:
       - user
+  /v1/users/idtoken:
+    get:
+      consumes:
+      - application/json
+      description: This api for Get User By Token ID
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Get User By ID From Token
+      tags:
+      - users
   /v1/users/post:
     post:
       consumes:
@@ -169,6 +216,8 @@ paths:
           description: OK
           schema:
             type: string
+      security:
+      - APiKeyAuth: []
       summary: Register User
       tags:
       - users
@@ -191,7 +240,15 @@ paths:
           description: OK
           schema:
             type: string
+      security:
+      - APiKeyAuth: []
       summary: Send Email Code
       tags:
       - users
+securityDefinitions:
+  BearerAuth:
+    description: GetMyProfile
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

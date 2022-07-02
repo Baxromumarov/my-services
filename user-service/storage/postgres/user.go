@@ -319,3 +319,17 @@ func (r *userRepo) CheckFeild(field, value string) (bool, error) {
 
 	return true, nil
 }
+
+func (r *userRepo) GetByEmail(m *pb.Email) (*pb.UserData, error) {
+	var res pb.UserData
+	err := r.db.QueryRow(`SELECT id, email_code,password FROM users WHERE email = $1`,m.Email).Scan(
+		&res.Id,
+		&res.EmailCode,
+		&res.Password,
+	)
+	if err != nil {
+		return &pb.UserData{}, err
+	}
+	return &res, nil
+
+}

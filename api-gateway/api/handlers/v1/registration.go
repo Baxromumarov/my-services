@@ -2,29 +2,28 @@ package v1
 
 import (
 	"context"
-	"math/rand"
-	"strconv"
-	"strings"
-
-	"net/http"
-	"time"
-
-	pb "github.com/baxromumarov/my-services/api-gateway/genproto"
-	l "github.com/baxromumarov/my-services/api-gateway/pkg/logger"
-	"github.com/gomodule/redigo/redis"
-
-	"github.com/gin-gonic/gin"
-	"github.com/goccy/go-json"
-	"google.golang.org/protobuf/encoding/protojson"
-
 	"crypto/tls"
 	"fmt"
+	"math/rand"
+	"net/http"
+	"strconv"
+	"strings"
+	"time"
 
-	// "github.com/google/uuid"
+	"github.com/baxromumarov/my-services/api-gateway/api/auth"
+	"github.com/baxromumarov/my-services/api-gateway/api/model"
+	pb "github.com/baxromumarov/my-services/api-gateway/genproto"
+	l "github.com/baxromumarov/my-services/api-gateway/pkg/logger"
+	"github.com/gin-gonic/gin"
+	"github.com/goccy/go-json"
+	"github.com/gofrs/uuid"
+	"github.com/gomodule/redigo/redis"
+	"google.golang.org/protobuf/encoding/protojson"
 	gomail "gopkg.in/mail.v2"
 )
 
 // @Summary Register User
+//@Security APiKeyAuth
 // @Description This api uses for registration new user
 // @Tags users
 // @Accept json
@@ -126,10 +125,11 @@ func (h handlerV1) RegisterUser(c *gin.Context) {
 		h.log.Error("failed set to redis IN REGISTER FUNC  2", l.Error(err))
 		return
 	}
-
 }
 
+
 // @Summary Send Email Code
+//@Security APiKeyAuth
 // @Description This api uses for sendin email code to user
 // @Tags users
 // @Accept json
@@ -179,7 +179,14 @@ func (h handlerV1) VerifyUser(c *gin.Context) {
 		h.log.Error("failed while using CreateUser func in verify", l.Error(err))
 		return
 	}
-
+	id, err := uuid.NewV4()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+	redisBody.Id = id.String()
 	// valid:= ValidPassword(redisBody.EmailCode) 
 	
 	if mailData.EmailCode == redisBody.EmailCode  {
@@ -194,6 +201,98 @@ func (h handlerV1) VerifyUser(c *gin.Context) {
 
 		c.JSON(http.StatusCreated, createVal)
 	}
+	/*
+	//jwthandler--------------------------------------------------
+	h.jwtHandler = auth.JwtHandler{
+		Sub: redisBody.Id,
+		Iss: "client",
+		Role: "authorized",
+		Log: h.log,
+	}
+
+	access, refresh, err := h.jwtHandler.GenerateJwt()
+	if err != nil{
+		c.JSON(http.StatusConflict,gin.H{
+			"error":"error while generating jwt",
+		})
+		h.log.Error("error generate new jwt tokens",l.Error(err))
+		return
+	}
+	c.JSON(http.StatusOK,&model.RegisterResponseModel{
+		UserId: redisBody.Id,
+		AccessToken: access,
+		RefreshToken: refresh,
+	})
+	fmt.Println(access, refresh)
+	*/
+
+}
+
+//@Summary login user
+//@Description login user with password
+//@Tags users
+//@Accept  json
+//@Produce json
+//@Param email path string true "email"
+//@Param password path string true "password"
+//@Success 200 {string} Success
+//@Router /users/login [get]
+func (h handlerV1) LoginUser(c *gin.Context) {
+	var jspbMarshal protojson.MarshalOptions
+	jspbMarshal.UseProtoNames = true
+
+	var mailData ForLogin
+
+	err := c.ShouldBindJSON(&mailData)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to bind json in login func", l.Error(err))
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
+	defer cancel()
+
+
+	response, err := h.serviceManager.UserService().GetByEmail(
+		ctx, &pb.Email{
+			Email: mailData.Email,
+		})
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to get user data", l.Error(err))
+		return
+	}
+	
+	if response.Password == mailData.Password {
+		//jwthandler--------------------------------------------------
+	h.jwtHandler = auth.JwtHandler{
+		Sub: response.Id,
+		Iss: "client",
+		Role: "authorized",
+		Log: h.log,
+	}
+
+	access, refresh, err := h.jwtHandler.GenerateJwt()
+	if err != nil{
+		c.JSON(http.StatusConflict,gin.H{
+			"error":"error while generating jwt",
+		})
+		h.log.Error("error generate new jwt tokens",l.Error(err))
+		return
+	}
+	c.JSON(http.StatusOK,&model.RegisterResponseModel{
+		UserId: response.Id,
+		AccessToken: access,
+		RefreshToken: refresh,
+	})
+	fmt.Println(access, refresh)
+	}
+
 }
 
 func ValidPassword(password string) bool {

@@ -190,3 +190,12 @@ func (s *UserService) CheckField(ctx context.Context, req *pb.UserCheckRequest) 
 
 	return &pb.UserCheckResponse{Response: bl}, nil
 }
+
+func (s *UserService) GetByEmail(ctx context.Context, req *pb.Email) (*pb.UserData, error) {
+	email, err := s.storage.User().GetByEmail(req)
+	if err != nil {
+		s.logger.Error("Error while getting email information", l.Error(err))
+		return nil, status.Error(codes.Internal, "Error while getting email information")
+	}
+	return email, nil
+}
