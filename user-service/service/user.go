@@ -3,9 +3,12 @@ package service
 import (
 	"context"
 	"fmt"
+
 	pb "github.com/baxromumarov/my-services/user-service/genproto"
+
 	// "github.com/baxromumarov/my-services/user-service/pkg/logger"
 	l "github.com/baxromumarov/my-services/user-service/pkg/logger"
+	"github.com/baxromumarov/my-services/user-service/pkg/messagebroker"
 	cl "github.com/baxromumarov/my-services/user-service/service/grpc_client"
 	"github.com/baxromumarov/my-services/user-service/storage"
 	"github.com/jmoiron/sqlx"
@@ -18,14 +21,16 @@ type UserService struct {
 	storage storage.IStorage
 	logger  l.Logger
 	client  cl.GrpcClientI
+	publisher map[string]messagebroker.Publisher
 }
 
 //NewUserService ...
-func NewUserService(db *sqlx.DB, log l.Logger, client cl.GrpcClientI) *UserService {
+func NewUserService(db *sqlx.DB, log l.Logger, client cl.GrpcClientI, publisher map[string]messagebroker.Publisher) *UserService {
 	return &UserService{
 		storage: storage.NewStoragePg(db),
 		logger:  log,
 		client:  client,
+		publisher: publisher,
 	}
 }
 
@@ -38,6 +43,17 @@ func (s *UserService) Create(ctx context.Context, req *pb.User) (*pb.User, error
 	}
 	return user, nil
 }
+
+func (s *UserService) publisherUserMessage(user []byte) error {
+
+	err := s.publisher["user"].Publish([]byte("user"), user, string(user))
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 
 func (s *UserService) CreateAd(ctx context.Context, cad *pb.Address) (*pb.Address, error) {
 
@@ -65,6 +81,21 @@ func (s *UserService) Insert(ctx context.Context, req1 *pb.User) (*pb.User, erro
 			}
 			fmt.Println(createdPost)
 		}
+
+	}
+	p, _ := user.Marshal()
+	var usera pb.User
+	err = usera.Unmarshal(p)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	fmt.Println(user)
+
+	err = s.publisherUserMessage(p)
+	if err != nil {
+		s.logger.Error("failed while publishing user info", l.Error(err))
+		return nil, status.Error(codes.Internal, "failed while publishing user info")
 
 	}
 	return user, nil
