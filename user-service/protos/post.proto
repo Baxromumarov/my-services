@@ -35,3 +35,6 @@ message Media{
     string link = 3;
 
 }
+message salom{
+    string salom = 1;
+}
