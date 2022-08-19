@@ -4,14 +4,14 @@ CREATE TABLE IF NOT EXISTS users (
     last_name varchar(255),
     email varchar(255),
     bio varchar(255),
-    phone_numbers text[],
+    phone_numbers text [],
     address_id text,
     typeid text,
     status text,
-    createdat timestamp ,
-    updatedat timestamp ,
-    deletedat timestamp ,
+    createdat timestamp,
+    updatedat timestamp,
+    deletedat timestamp,
     user_name varchar(255),
     password varchar(255),
     email_code varchar(255)
-    );
+);

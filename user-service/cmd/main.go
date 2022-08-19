@@ -32,26 +32,25 @@ func main() {
 	if err != nil {
 		log.Fatal("sqlx connection to postgres error", logger.Error(err))
 	}
-	
+
 	grpcC, err := grpcClient.New(cfg)
 	if err != nil {
-		log.Fatal("grpc client error", logger.Error(err))	
+		log.Fatal("grpc client error", logger.Error(err))
 		return
 	}
 	//Kafka
 	publisherMap := make(map[string]messagebroker.Publisher)
 
-	userTopicPublisher := events.NewKafkaProducerBroker(cfg,log,"user.user")
-	defer func(){
-		err:=userTopicPublisher.Stop()
-		if err!=nil{
-			log.Fatal("failed to stop kafka user",logger.Error(err))
+	userTopicPublisher := events.NewKafkaProducerBroker(cfg, log, "user.user")
+	defer func() {
+		err := userTopicPublisher.Stop()
+		if err != nil {
+			log.Fatal("failed to stop kafka user", logger.Error(err))
 		}
 	}()
 
 	publisherMap["user"] = userTopicPublisher
 	//Kafka End
-
 
 	userService := service.NewUserService(connDB, log, grpcC, publisherMap)
 
