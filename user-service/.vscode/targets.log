@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jul 24 14:13:57 2022
+# Make data base, printed on Fri Aug 19 13:36:36 2022
 
 # Variables
 
@@ -16,8 +16,6 @@ make: *** No rule to make target 'all'.  Stop.
 GDK_BACKEND = x11
 # environment
 LC_ALL = C
-# environment
-NO_AT_BRIDGE = 1
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
@@ -27,11 +25,13 @@ SNAP_INSTANCE_KEY =
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
+MANDATORY_PATH = /usr/share/gconf/ubuntu.mandatory.path
+# environment
 LC_NAME = en_US.UTF-8
 # environment
 LC_NUMERIC = en_US.UTF-8
 # environment
-VSCODE_CWD = /home/baxrom/go/src/github.com/baxromumarov/my-services
+VSCODE_CWD = /home/baxrom
 # makefile (from 'Makefile', line 2)
 APP = template
 # environment
@@ -49,7 +49,7 @@ GOPATH = /home/baxrom/go
 # environment
 SNAP_INSTANCE_NAME = code
 # environment
-GDK_PIXBUF_MODULEDIR = /snap/code/102/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+GDK_PIXBUF_MODULEDIR = /snap/code/105/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -59,15 +59,17 @@ PWD = /home/baxrom/go/src/github.com/baxromumarov/my-services/user-service
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
+LSCOLORS = Gxfxcxdxbxegedabagacad
+# environment
 XDG_DATA_DIRS = /usr/share/ubuntu:/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop
 # environment
-OLDPWD = /home/baxrom/go/src/github.com/baxromumarov
+OLDPWD = /home/baxrom
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/baxrom/.config/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
+VSCODE_CODE_CACHE_PATH = /home/baxrom/.config/Code/CachedData/e4503b30fc78200f846c62cf8091b76ff5547662
 # environment
 XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
 # environment
@@ -78,16 +80,12 @@ XAUTHORITY = /home/baxrom/.Xauthority
 .LOADED := 
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
-# environment
-GNOME_TERMINAL_SERVICE = :1.113
 # makefile
 MAKEFLAGS = pqrR
 # makefile
 CURDIR := /home/baxrom/go/src/github.com/baxromumarov/my-services/user-service
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
-# environment
-LESSOPEN = | /usr/bin/lesspipe %s
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -109,7 +107,9 @@ SNAP_REEXEC =
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 8694
+ZSH = /home/baxrom/.oh-my-zsh
+# environment
+VSCODE_PID = 55395
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -117,7 +117,7 @@ XDG_SESSION_TYPE = x11
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
-SESSION_MANAGER = local/acer:@/tmp/.ICE-unix/2385,unix/acer:/tmp/.ICE-unix/2385
+SESSION_MANAGER = local/acer:@/tmp/.ICE-unix/2725,unix/acer:/tmp/.ICE-unix/2725
 # automatic
 *F = $(notdir $*)
 # environment
@@ -141,9 +141,7 @@ XMODIFIERS = @im=ibus
 # environment
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # environment
-SHLVL = 1
-# environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/e59e9778_6394_440d_964e_ee05a611d938
+SHLVL = 0
 # environment
 MAKELEVEL := 0
 # makefile (from 'Makefile', line 3)
@@ -151,9 +149,9 @@ APP_CMD_DIR = ./cmd
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-SNAP_COOKIE = LK5k0CudXglewwwH41KcwUD_GUO0pjsjd-QOU9PJG5Kl2D_hx7FO
+SNAP_COOKIE = 0aeOyneetXUOMgb2o4w3toZ1PwwJOvdB1gvG7Bo88bXHTd5ts6oF
 # environment
-PATH = /usr/local/go/bin:/usr/local/go/bin:/usr/local/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/baxrom/.local/bin/
+PATH = /usr/include/boost:/usr/bin/cmake:”/home/yourusername/anaconda3/bin:/home/baxrom/.cargo/bin:/usr/local/go/bin:/usr/local/go/bin:/usr/local/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin”:/home/baxrom/go/bin
 # default
 MAKEFILES := 
 # environment
@@ -167,27 +165,27 @@ SNAP_USER_COMMON = /home/baxrom/snap/code/common
 # environment
 LC_TIME = en_US.UTF-8
 # environment
-SNAP = /snap/code/102
+SNAP = /snap/code/105
 # environment
-INVOCATION_ID = ad29dde79c14481db8a0bf275aaa09d7
+INVOCATION_ID = d35590599ad247e6b3d980f85866e0a5
 # environment
-SNAP_REVISION = 102
+SNAP_REVISION = 105
 # environment
 SNAP_REAL_HOME = /home/baxrom
 # environment
 LC_TELEPHONE = en_US.UTF-8
-# environment
-LESSCLOSE = /usr/bin/lesspipe %s %s
 # automatic
 ?F = $(notdir $?)
 # environment
 XDG_CURRENT_DESKTOP = Unity
 # environment
-LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+LS_COLORS = 
 # automatic
 +F = $(notdir $+)
 # environment
 XDG_SEAT_PATH = /org/freedesktop/DisplayManager/Seat0
+# environment
+LESS = -R
 # environment
 DESKTOP_SESSION = ubuntu
 # environment
@@ -205,27 +203,33 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := build
 # environment
-SYSTEMD_EXEC_PID = 6458
+SYSTEMD_EXEC_PID = 2771
 # environment
 DISPLAY = :0
 # environment
 USER = baxrom
 # environment
 GTK_MODULES = gail:atk-bridge
+# environment
+DEFAULTS_PATH = /usr/share/gconf/ubuntu.default.path
 # default
 MAKE_VERSION := 4.3
 # environment
 DISABLE_WAYLAND = 1
 # environment
-SNAP_DATA = /var/snap/code/102
+SNAP_DATA = /var/snap/code/105
 # environment
-SNAP_CONTEXT = LK5k0CudXglewwwH41KcwUD_GUO0pjsjd-QOU9PJG5Kl2D_hx7FO
+SNAP_CONTEXT = 0aeOyneetXUOMgb2o4w3toZ1PwwJOvdB1gvG7Bo88bXHTd5ts6oF
 # environment
-MANAGERPID = 2190
+MANAGERPID = 2300
 # environment
 LC_MEASUREMENT = en_US.UTF-8
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 8648
+GIO_LAUNCHED_DESKTOP_FILE_PID = 55348
+# environment
+PAGER = less
+# environment
+_ = /snap/code/105/usr/share/code/code
 # environment
 LC_PAPER = en_US.UTF-8
 # environment
@@ -233,11 +237,9 @@ XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-COLORTERM = truecolor
-# environment
 GDK_PIXBUF_MODULE_FILE = /home/baxrom/snap/code/common/.cache/gdk-pixbuf-loaders.cache
 # environment
-JOURNAL_STREAM = 8:32201
+JOURNAL_STREAM = 8:34182
 # environment
 GOMODCACHE = /home/baxrom/go/pkg/mod
 # environment
@@ -251,13 +253,11 @@ QT_IM_MODULE = ibus
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-c93bfc24-1.69.2-main.sock
-# environment
-TERM = xterm-256color
+VSCODE_IPC_HOOK = /run/user/1000/vscode-c93bfc24-1.70.2-main.sock
 # environment
 SNAP_NAME = code
 # environment
-GSETTINGS_SCHEMA_DIR = /snap/code/102/usr/share/glib-2.0/schemas
+GSETTINGS_SCHEMA_DIR = /snap/code/105/usr/share/glib-2.0/schemas
 # environment
 PAPERSIZE = letter
 # environment
@@ -267,7 +267,7 @@ GOPROXY = https://proxy.golang.org,direct
 # automatic
 <F = $(notdir $<)
 # environment
-SNAP_VERSION = 3b889b09
+SNAP_VERSION = e4503b30
 # default
 SUFFIXES := 
 # environment
@@ -275,15 +275,14 @@ VSCODE_CLI = 1
 # environment
 ELECTRON_NO_ATTACH_CONSOLE = 1
 # environment
-VTE_VERSION = 6800
-# environment
 SNAP_COMMON = /var/snap/code/common
 # environment
 XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/baxrom
 # default
+ 
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # environment
-SNAP_USER_DATA = /home/baxrom/snap/code/102
+SNAP_USER_DATA = /home/baxrom/snap/code/105
 # environment
 XDG_MENU_PREFIX = gnome-
 # environment
@@ -293,7 +292,7 @@ LC_IDENTIFICATION = en_US.UTF-8
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # variable set hash-table stats:
-# Load=140/1024=14%, Rehash=0, Collisions=13/170=8%
+# Load=139/1024=14%, Rehash=0, Collisions=7/169=4%
 
 # Pattern-specific Variable Values
 
@@ -310,7 +309,6 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 # No implicit rules.
 
 # Files
- 
 
 lint:
 #  Implicit rule search has not been done.
@@ -322,7 +320,7 @@ lint:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-23 10:25:30.085757185
+#  Last modified 2022-07-31 11:44:42.907527476
 #  File has been updated.
 #  Successfully updated.
 
@@ -381,6 +379,6 @@ migrate-up:
 # strcache performance: lookups = 37 / hit rate = 24%
 # hash-table stats:
 # Load=28/8192=0%, Rehash=0, Collisions=0/37=0%
-# Finished Make data base on Sun Jul 24 14:13:57 2022
+# Finished Make data base on Fri Aug 19 13:36:36 2022
 
  
