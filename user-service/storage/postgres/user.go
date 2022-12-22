@@ -23,7 +23,7 @@ func NewUserRepo(db *sqlx.DB) *userRepo {
 
 //create table users
 func (r *userRepo) Create(user *pb.User) (*pb.User, error) {
-	_, err := r.db.Query(`CREATE TABLE IF NOT EXISTS users (
+	_, err := r.db.Exec(`CREATE TABLE IF NOT EXISTS users (
 		id varchar(255),
 		first_name varchar(255),
 		last_name varchar(255),
