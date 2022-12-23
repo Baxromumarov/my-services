@@ -1,10 +1,10 @@
 package postgres
 
 import (
-	pb "github.com/baxromumarov/my-services/user-service/genproto"
 	"reflect"
 	"testing"
-	
+
+	pb "github.com/baxromumarov/my-services/user-service/genproto"
 )
 
 func TestUserRepo_InsertAd(t *testing.T) {

@@ -74,7 +74,7 @@ func (r *userRepo) Insert(user *pb.User) (*pb.User, error) {
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,$12) Returning id,first_name,last_name,email,
 		bio`, id, user.FirstName, user.LastName, user.Email,
 		user.Bio, pq.Array(user.PhoneNumbers),
-		user.TypeId, user.Status, crtime, user.UserName,user.Password,user.EmailCode).Scan(
+		user.TypeId, user.Status, crtime, user.UserName, user.Password, user.EmailCode).Scan(
 		&res.Id,
 		&res.FirstName,
 		&res.LastName,
