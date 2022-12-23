@@ -16,6 +16,41 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/v1/get/json-resp": {
+            "get": {
+                "description": "API for getting json data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "train"
+                ],
+                "summary": "get json data",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.JsonFile"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.ResponseError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.ResponseError"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/users": {
             "get": {
                 "description": "This api is using for getting users list",
@@ -191,6 +226,338 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "models.BusinessActivity": {
+            "type": "object",
+            "properties": {
+                "doubtful_revenue": {
+                    "type": "number"
+                },
+                "hahal_revenue": {
+                    "type": "integer"
+                },
+                "halal": {
+                    "type": "number"
+                },
+                "not_halal": {
+                    "type": "number"
+                },
+                "not_halal_revenue": {
+                    "type": "number"
+                },
+                "questionable": {
+                    "type": "number"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.BussinessSummary": {
+            "type": "object",
+            "properties": {
+                "lang": {
+                    "type": "string"
+                },
+                "last_updated": {
+                    "type": "string"
+                },
+                "source_filling_date": {
+                    "type": "string"
+                },
+                "source_filling_type": {
+                    "type": "string"
+                },
+                "ticker": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Data": {
+            "type": "object",
+            "properties": {
+                "active": {
+                    "type": "boolean"
+                },
+                "bussiness_summary": {
+                    "$ref": "#/definitions/models.BussinessSummary"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "exchange": {
+                    "type": "string"
+                },
+                "expiration": {
+                    "type": "integer"
+                },
+                "group": {
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "$ref": "#/definitions/models.Identifiers"
+                },
+                "is_buyable": {
+                    "type": "boolean"
+                },
+                "is_favorite": {
+                    "type": "boolean"
+                },
+                "is_sellabe": {
+                    "type": "boolean"
+                },
+                "key_stats": {
+                    "$ref": "#/definitions/models.KeyStats"
+                },
+                "mpi": {
+                    "type": "string"
+                },
+                "musaffa": {
+                    "$ref": "#/definitions/models.Musaffa"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "option_data": {
+                    "$ref": "#/definitions/models.OptionData"
+                },
+                "purchase_statuses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.PurchaseStatuses"
+                    }
+                },
+                "ticker": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "underlying_symbol_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Identifiers": {
+            "type": "object",
+            "properties": {
+                "CUSIP": {
+                    "type": "string"
+                },
+                "FIGI": {
+                    "type": "string"
+                },
+                "ISIN": {
+                    "type": "string"
+                },
+                "RIC": {
+                    "type": "string"
+                },
+                "SEDOL": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.InterestBearingDebt": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "debtRatio": {
+                    "type": "number"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.InterestBearingSecuritiesAndAssets": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "interestRatio": {
+                    "type": "number"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.JsonFile": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/models.Data"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.KeyStats": {
+            "type": "object",
+            "properties": {
+                "average_daily_volume_for_last_10_days": {
+                    "type": "string"
+                },
+                "current_ratio": {
+                    "type": "string"
+                },
+                "dividient": {
+                    "type": "integer"
+                },
+                "dividient_per_share": {
+                    "type": "string"
+                },
+                "dividient_yield": {
+                    "type": "string"
+                },
+                "dividient_yield_ratio": {
+                    "type": "integer"
+                },
+                "eps": {
+                    "type": "string"
+                },
+                "l_t_debt_equility": {
+                    "type": "string"
+                },
+                "market_capitalization": {
+                    "type": "string"
+                },
+                "p_e": {
+                    "type": "string"
+                },
+                "price_change_1_day": {
+                    "type": "string"
+                },
+                "price_change_5_day": {
+                    "type": "string"
+                },
+                "quick_ratio": {
+                    "type": "string"
+                },
+                "roa": {
+                    "type": "string"
+                },
+                "roi": {
+                    "type": "string"
+                },
+                "total_debt_equity": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Musaffa": {
+            "type": "object",
+            "properties": {
+                "business_activity": {
+                    "$ref": "#/definitions/models.BusinessActivity"
+                },
+                "company_name": {
+                    "type": "string"
+                },
+                "compliance_ranking": {
+                    "type": "integer"
+                },
+                "id_musaffo": {
+                    "type": "string"
+                },
+                "interest_bearing_debt": {
+                    "$ref": "#/definitions/models.InterestBearingDebt"
+                },
+                "interest_bearing_securities_and_assets": {
+                    "$ref": "#/definitions/models.InterestBearingSecuritiesAndAssets"
+                },
+                "last_update": {
+                    "type": "string"
+                },
+                "report_date": {
+                    "type": "string"
+                },
+                "report_source": {
+                    "type": "string"
+                },
+                "shariah_compliance_status": {
+                    "type": "string"
+                },
+                "stock_name": {
+                    "type": "string"
+                },
+                "total_revenue": {
+                    "type": "integer"
+                },
+                "trailing_36_month_avr_cap": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.OptionData": {
+            "type": "object",
+            "properties": {
+                "option_group_id": {
+                    "type": "string"
+                },
+                "right": {
+                    "type": "string"
+                },
+                "strike_price": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.PurchaseStatuses": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "pocket_id": {
+                    "type": "string"
+                },
+                "sell_count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.ResponseError": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "$ref": "#/definitions/response.Error"
+                }
+            }
+        },
         "v1.Address": {
             "type": "object",
             "properties": {
@@ -260,6 +627,9 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "updatedAt": {
+                    "type": "string"
+                },
+                "user_name": {
                     "type": "string"
                 }
             }

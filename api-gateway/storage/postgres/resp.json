@@ -1,0 +1,99 @@
+{
+  "status": "OK",
+  "description": "The request has succeeded",
+  "data": {
+    "id": "TSLA.NASDAQ",
+    "ticker": "TSLA",
+    "name": "Tesla",
+    "description": "Tesla, Inc. - Common Stock",
+    "group": "",
+    "underlying_symbol_id": "",
+    "exchange": "NASDAQ",
+    "expiration": 0,
+    "country": "US",
+    "type": "STOCK",
+    "option_data": {
+      "option_group_id": "",
+      "right": "",
+      "strike_price": ""
+    },
+    "mpi": "0.01",
+    "currency": "USD",
+    "identifiers": {
+      "ISIN": "US88160R1014",
+      "FIGI": "",
+      "CUSIP": "",
+      "RIC": "TSLA.OQ",
+      "SEDOL": "B616C79"
+    },
+    "icon": "https://circles-all.s3.eu-central-1.amazonaws.com/STOCK/14qnvWAqZGDF3Z8rC33melDQlbl3joo.png",
+    "is_favorite": false,
+    "musaffa": {
+      "id_musaffo": "",
+      "company_name": "Tesla Inc",
+      "stock_name": "TSLA",
+      "shariah_compliance_status": "HALAL",
+      "compliance_ranking": 2,
+      "business_activity": {
+        "not_halal": 0.1507201,
+        "questionable": 3.7400916,
+        "halal": 96.11,
+        "status": "Pass",
+        "hahal_revenue": 34434290800,
+        "doubtful_revenue": 1340000004.9304962,
+        "not_halal_revenue": 53999999.06718731
+      },
+      "interest_bearing_securities_and_assets": {
+        "interestRatio": 3.37118,
+        "status": "Pass",
+        "amount": 19478000000
+      },
+      "interest_bearing_debt": {
+        "debtRatio": 0.766728,
+        "status": "Pass",
+        "amount": 4430000000
+      },
+      "report_source": "https://www.sec.gov/Archives/edgar/data/1318605/000095017022012936/tsla-20220630.htm",
+      "report_date": "2022-06-30",
+      "total_revenue": 35828000000,
+      "trailing_36_month_avr_cap": 577779861134,
+      "last_update": ""
+    },
+    "bussiness_summary": {
+      "last_updated": "2022-05-03 08:32:00",
+      "lang": "en-US",
+      "source_filling_date": "2022-02-07T00:00:00",
+      "source_filling_type": "10K",
+      "value": "Tesla, Inc. designs, develops, manufactures, sells and leases fully electric vehicles and energy generation and storage systems, and offer services related to its products. The Company's automotive segment includes the design, development, manufacturing, sales, and leasing of electric vehicles as well as sales of automotive regulatory credits. Additionally, the automotive segment is also comprised of services and other, which includes non-warranty after-sales vehicle services, sales of used vehicles, retail merchandise, sales by its acquired subsidiaries to third party customers, and vehicle insurance. Its energy generation and storage segment includes the design, manufacture, installation, sales and leasing of solar energy generation and energy storage products and related services and sales of solar energy systems incentives. Its automotive products include Model 3, Model Y, Model S and Model X. Powerwall and Megapack are its lithium-ion battery energy storage products.",
+      "ticker": "TSLA"
+    },
+    "key_stats": {
+      "average_daily_volume_for_last_10_days": "133.45743 M",
+      "market_capitalization": "434412.00000 M",
+      "price_change_1_day": "-0.16691 %",
+      "price_change_5_day": "-12.26403 USD",
+      "eps": "1.63358 USD",
+      "dividient_per_share": "",
+      "p_e": "73.57918",
+      "dividient_yield": "",
+      "current_ratio": "1.37529",
+      "l_t_debt_equility": "17.37388 %",
+      "quick_ratio": "1.08313",
+      "roa": "9.87758 %",
+      "roi": "14.56930 %",
+      "total_debt_equity": "22.63738 %",
+      "dividient": 0,
+      "dividient_yield_ratio": 0
+    },
+    "purchase_statuses": [
+      {
+        "pocket_id": "FRW94256",
+        "count": 10,
+        "sell_count": 10
+      }
+    ],
+    "is_buyable": true,
+    "is_sellabe": true,
+    "active": true
+  }
+}

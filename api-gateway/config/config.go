@@ -6,6 +6,19 @@ import (
 	"github.com/spf13/cast"
 )
 
+const (
+	// DebugMode indicates service mode is debug.
+	DebugMode = "debug"
+	// TestMode indicates service mode is test.
+	TestMode = "test"
+	// ReleaseMode indicates service mode is release.
+	ReleaseMode = "release"
+
+	ErrUniquePassport = "rpc error: code = InvalidArgument desc = ERROR: duplicate key value violates unique constraint \"application_passport_idx\" (SQLSTATE 23505)"
+	ErrUniquePinfl    = "rpc error: code = InvalidArgument desc = ERROR: duplicate key value violates unique constraint \"application_passport_pinfl_idx\" (SQLSTATE 23505)"
+	ErrUniquePhone    = "rpc error: code = InvalidArgument desc = ERROR: duplicate key value violates unique constraint \"application_phone_number_idx\" (SQLSTATE 23505)"
+)
+
 // Config ...
 type Config struct {
 	Environment string // develop, staging, production
@@ -13,6 +26,11 @@ type Config struct {
 	UserServiceHost string
 	UserServicePort int
 
+	PostgresHost     string
+	PostgresPort     int
+	PostgresDatabase string
+	PostgresUser     string
+	PostgresPassword string
 
 	//context timeout in seconds
 	CtxTimeout int
@@ -36,9 +54,13 @@ func Load() Config {
 
 	c.CtxTimeout = cast.ToInt(getOrReturnDefault("CTX_TIMEOUT", 7))
 
+	c.PostgresHost = cast.ToString(getOrReturnDefault("POSTGRES_HOST", "localhost"))
+	c.PostgresPort = cast.ToInt(getOrReturnDefault("POSTGRES_PORT", 5432))
+	c.PostgresDatabase = cast.ToString(getOrReturnDefault("POSTGRES_DATABASE", "testdb"))
+	c.PostgresUser = cast.ToString(getOrReturnDefault("POSTGRES_USER", "postgres"))
+	c.PostgresPassword = cast.ToString(getOrReturnDefault("POSTGRES_PASSWORD", "1234"))
 	c.RedisHost = cast.ToString(getOrReturnDefault("REDIS_HOST", "localhost"))
 	c.RedisPort = cast.ToInt(getOrReturnDefault("REDIS_PORT", 6379))
-
 
 	return c
 }

@@ -19,67 +19,74 @@ var (
 	Error = zap.Error
 	// Bool ...
 	Bool = zap.Bool
-
 	// Any ...
 	Any = zap.Any
 )
 
 // Logger ...
-type Logger interface {
+type LoggerI interface {
 	Debug(msg string, fields ...Field)
 	Info(msg string, fields ...Field)
 	Warn(msg string, fields ...Field)
 	Error(msg string, fields ...Field)
+	DPanic(msg string, fields ...Field)
+	Panic(msg string, fields ...Field)
 	Fatal(msg string, fields ...Field)
 }
 
-type LoggerImpl struct {
+type loggerImpl struct {
 	zap *zap.Logger
 }
 
-var customTimeFormat string
+const (
+	customTimeFormat = time.RFC3339Nano
+)
 
-// New ...
-func New(level, namespace string) *LoggerImpl {
+// NewLogger ...
+func NewLogger(namespace string, level string) LoggerI {
 	if level == "" {
 		level = LevelInfo
 	}
 
-	logger := LoggerImpl{
-		zap: newZapLogger(level, time.RFC3339),
+	logger := loggerImpl{
+		zap: newZapLogger(namespace, level, customTimeFormat),
 	}
-
-	logger.zap = logger.zap.Named(namespace)
-
-	zap.RedirectStdLog(logger.zap)
 
 	return &logger
 }
 
-func (l *LoggerImpl) Debug(msg string, fields ...Field) {
+func (l *loggerImpl) Debug(msg string, fields ...Field) {
 	l.zap.Debug(msg, fields...)
 }
 
-func (l *LoggerImpl) Info(msg string, fields ...Field) {
+func (l *loggerImpl) Info(msg string, fields ...Field) {
 	l.zap.Info(msg, fields...)
 }
 
-func (l *LoggerImpl) Warn(msg string, fields ...Field) {
+func (l *loggerImpl) Warn(msg string, fields ...Field) {
 	l.zap.Warn(msg, fields...)
 }
 
-func (l *LoggerImpl) Error(msg string, fields ...Field) {
+func (l *loggerImpl) Error(msg string, fields ...Field) {
 	l.zap.Error(msg, fields...)
 }
 
-func (l *LoggerImpl) Fatal(msg string, fields ...Field) {
+func (l *loggerImpl) DPanic(msg string, fields ...Field) {
+	l.zap.DPanic(msg, fields...)
+}
+
+func (l *loggerImpl) Panic(msg string, fields ...Field) {
+	l.zap.Panic(msg, fields...)
+}
+
+func (l *loggerImpl) Fatal(msg string, fields ...Field) {
 	l.zap.Fatal(msg, fields...)
 }
 
 // GetNamed ...
-func GetNamed(l Logger, name string) Logger {
+func GetNamed(l LoggerI, name string) LoggerI {
 	switch v := l.(type) {
-	case *LoggerImpl:
+	case *loggerImpl:
 		v.zap = v.zap.Named(name)
 		return v
 	default:
@@ -89,10 +96,10 @@ func GetNamed(l Logger, name string) Logger {
 }
 
 // WithFields ...
-func WithFields(l Logger, fields ...Field) Logger {
+func WithFields(l LoggerI, fields ...Field) LoggerI {
 	switch v := l.(type) {
-	case *LoggerImpl:
-		return &LoggerImpl{
+	case *loggerImpl:
+		return &loggerImpl{
 			zap: v.zap.With(fields...),
 		}
 	default:
@@ -102,9 +109,9 @@ func WithFields(l Logger, fields ...Field) Logger {
 }
 
 // Cleanup ...
-func Cleanup(l Logger) error {
+func Cleanup(l LoggerI) error {
 	switch v := l.(type) {
-	case *LoggerImpl:
+	case *loggerImpl:
 		return v.zap.Sync()
 	default:
 		l.Info("logger.Cleanup: invalid logger type")

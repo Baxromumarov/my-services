@@ -8,7 +8,7 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-func newZapLogger(level, timeFormat string) *zap.Logger {
+func newZapLogger(namespace, level, timeFormat string) *zap.Logger {
 	globalLevel := parseLevel(level)
 
 	highPriority := zap.LevelEnablerFunc(func(lvl zapcore.Level) bool {
@@ -20,13 +20,13 @@ func newZapLogger(level, timeFormat string) *zap.Logger {
 	})
 
 	consoleInfos := zapcore.Lock(os.Stdout)
+
 	consoleErrors := zapcore.Lock(os.Stderr)
 
 	// Configure console output.
 	encoderCfg := zap.NewProductionEncoderConfig()
 	if len(timeFormat) > 0 {
-		customTimeFormat = timeFormat
-		encoderCfg.EncodeTime = customTimeEncoder
+		encoderCfg.EncodeTime = customTimeEncoder(timeFormat)
 	} else {
 		encoderCfg.EncodeTime = zapcore.ISO8601TimeEncoder
 	}
@@ -39,11 +39,17 @@ func newZapLogger(level, timeFormat string) *zap.Logger {
 
 	logger := zap.New(core)
 
+	logger = logger.Named(namespace)
+
+	zap.RedirectStdLog(logger)
+
 	return logger
 }
 
-func customTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
-	enc.AppendString(t.Format(customTimeFormat))
+func customTimeEncoder(timeFormat string) func(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
+	return func(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
+		enc.AppendString(t.Format(timeFormat))
+	}
 }
 
 func parseLevel(level string) zapcore.Level {
@@ -56,22 +62,13 @@ func parseLevel(level string) zapcore.Level {
 		return zapcore.WarnLevel
 	case LevelError:
 		return zapcore.ErrorLevel
+	case LevelDPanic:
+		return zapcore.DPanicLevel
+	case LevelPanic:
+		return zapcore.PanicLevel
+	case LevelFatal:
+		return zapcore.FatalLevel
 	default:
 		return zapcore.InfoLevel
-	}
-}
-
-// GetZapLogger extracts zap struct from given logger interface
-func GetZapLogger(l Logger) *zap.Logger {
-	if l == nil {
-		return newZapLogger(LevelInfo, time.RFC3339)
-	}
-
-	switch v := l.(type) {
-	case *LoggerImpl:
-		return v.zap
-	default:
-		l.Info("logger.WithFields: invalid logger type, creating a new zap logger", String("level", LevelInfo), String("time_format", time.RFC3339))
-		return newZapLogger(LevelInfo, time.RFC3339)
 	}
 }
