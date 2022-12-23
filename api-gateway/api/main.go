@@ -37,6 +37,7 @@ func SetUpApi(cfg *config.Config, r *gin.Engine, h handle.HandlerV1) {
 	v1.GET("/users", h.ListUsers)
 	// api.PUT("/users/update/:id", h.UpdateUser)
 	// api.DELETE("/users/:id", h.DeleteUser)
+	
 	v1.GET("/get/json-resp", h.GetJson)
 
 	url := ginSwagger.URL("swagger/doc.json") // The url pointing to API definition
